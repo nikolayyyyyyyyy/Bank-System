@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Client;
 
 class ClientControllerApi extends Controller
 {
@@ -11,7 +12,7 @@ class ClientControllerApi extends Controller
      */
     public function index()
     {
-        //
+        return Client::all();
     }
 
     /**
