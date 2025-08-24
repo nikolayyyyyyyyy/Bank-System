@@ -10,16 +10,16 @@ class AuthController extends Controller
 {
     public function register(Request $request)
     {
-        $fields = $request->validate([
+        $request->validate([
             'name' => 'required|string|max:30|min:3',
-            'email' => 'required|string|email|max:255|unique:users,email',
+            'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:3',
         ]);
 
         $user = User::create([
-            'name' => $fields['name'],
-            'email' => $fields['email'],
-            'password' => Hash::make($fields['password']),
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
         ]);
 
         $token = $user->createToken('auth_token')->plainTextToken;
@@ -31,14 +31,14 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        $fields = $request->validate([
+        $request->validate([
             'email' => 'required|string|email|max:255',
             'password' => 'required|string|min:3',
         ]);
 
-        $user = User::where('email', $fields['email'])->first();
+        $user = User::where('email', $request['email'])->first();
 
-        if (!$user || !Hash::check($fields['password'], $user->password)) {
+        if (!$user || !Hash::check($request['password'], $user->password)) {
             return response()->json([
                 'message' =>
                     'Invalid credentials'

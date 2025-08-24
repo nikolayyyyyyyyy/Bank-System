@@ -24,6 +24,13 @@ class ClientControllerApi extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:clients',
+            'phone' => 'required|string|max:10|min:10',
+            'address' => 'required|string|max:500',
+        ]);
+
         $client = Client::create($request->all());
         return response()->json($client, 201);
     }
@@ -44,7 +51,21 @@ class ClientControllerApi extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        if (Client::find($id) === null) {
+            return response()->json(['message' => 'Client not found'], 404);
+        }
+
+        $request->validate([
+            'name' => 'sometimes|required|string|max:255',
+            'email' => 'sometimes|required|string|email|max:255|unique:clients',
+            'phone' => 'sometimes|required|string|max:10|min:10',
+            'address' => 'sometimes|required|string|max:500',
+        ]);
+
+        $client = Client::find($id);
+        $client->update($request->all());
+
+        return response()->json($client, 200);
     }
 
     /**
@@ -52,6 +73,10 @@ class ClientControllerApi extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        if (Client::find($id) === null) {
+            return response()->json(['message' => 'Client not found'], 404);
+        }
+        Client::destroy($id);
+        return response()->json(null, 204);
     }
 }
