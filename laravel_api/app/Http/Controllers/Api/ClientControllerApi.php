@@ -12,6 +12,10 @@ class ClientControllerApi extends Controller
      */
     public function index()
     {
+        if (Client::count() === 0) {
+            return response()->json(['message' => 'No clients found'], 404);
+        }
+
         return Client::all();
     }
 
@@ -20,7 +24,8 @@ class ClientControllerApi extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $client = Client::create($request->all());
+        return response()->json($client, 201);
     }
 
     /**
@@ -28,7 +33,10 @@ class ClientControllerApi extends Controller
      */
     public function show(string $id)
     {
-        //
+        if (Client::find(($id)) === null) {
+            return response()->json(['message' => 'Client not found'], 404);
+        }
+        return Client::find($id);
     }
 
     /**
