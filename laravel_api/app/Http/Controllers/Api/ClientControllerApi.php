@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
-
+namespace App\Http\Controllers\Api;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class TransactionControllerApi extends Controller
+class ClientControllerApi extends Controller
 {
     /**
      * Display a listing of the resource.
