@@ -72,9 +72,9 @@ class EmployeeControllerApi extends Controller
     public function update(Request $request, string $id)
     {
         $validator = Validator::make($request->all(), [
-            'first_name' => 'sometimes|string|max:255|min:5',
-            'middle_name' => 'sometimes|string|max:255|min:5',
-            'last_name' => 'sometimes|string|max:255|min:5',
+            'first_name' => 'sometimes|string|max:50|min:5',
+            'middle_name' => 'sometimes|string|max:50|min:5',
+            'last_name' => 'sometimes|string|max:50|min:5',
 
             'telephone_number' => [
                 'sometimes',
@@ -85,7 +85,6 @@ class EmployeeControllerApi extends Controller
             'position' => [
                 'sometimes',
                 'string',
-                'max:255',
                 Rule::in(['manager', 'cashier', 'director', 'developer', 'security', 'cleaner', 'secretary']),
             ]
         ]);

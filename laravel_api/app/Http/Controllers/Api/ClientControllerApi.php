@@ -27,9 +27,9 @@ class ClientControllerApi extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'first_name' => 'required|string|max:255',
-            'middle_name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
+            'first_name' => 'required|string|max:50|min:5',
+            'middle_name' => 'required|string|max:50|min:5',
+            'last_name' => 'required|string|max:50|min:5',
             'phone_number' => [
                 'required',
                 'string',
@@ -77,9 +77,9 @@ class ClientControllerApi extends Controller
         }
 
         $validator = Validator::make($request->all(), [
-            'first_name' => 'sometimes|string|max:255',
-            'middle_name' => 'sometimes|string|max:255',
-            'last_name' => 'sometimes|string|max:255',
+            'first_name' => 'sometimes|string|max:50|min:5',
+            'middle_name' => 'sometimes|string|max:50|min:5',
+            'last_name' => 'sometimes|string|max:50|min:5',
             'phone_number' => [
                 'sometimes',
                 'string',
