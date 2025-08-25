@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->string('first_name')->nullable(false);
             $table->string('middle_name')->nullable(false);
             $table->string('last_name')->nullable(false);
-            $table->enum('position', ['Manager', 'Cashier', 'Director', 'Developer', 'Security', 'Cleaner', 'Secretary'])->nullable(false);
+            $table->enum('position', ['manager', 'cashier', 'director', 'developer', 'security', 'cleaner', 'secretary'])->nullable(false);
             $table->string('telephone_number')->nullable(false);
             $table->softDeletes();
         });
