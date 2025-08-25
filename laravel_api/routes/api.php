@@ -11,11 +11,10 @@ Route::get('/user', function (Request $request) {
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
-
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 
 // Client API routes
-Route::prefix('clients')->group(function () {
+Route::prefix('clients')->middleware('auth:sanctum')->group(function () {
     Route::get('/', [ClientControllerApi::class, 'index']);
     Route::get('/{id}', [ClientControllerApi::class, 'show']);
     Route::post('/', [ClientControllerApi::class, 'store']);

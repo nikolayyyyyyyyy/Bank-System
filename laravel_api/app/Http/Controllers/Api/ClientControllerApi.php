@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Client;
+use Illuminate\Support\Facades\Validator;
+
 
 class ClientControllerApi extends Controller
 {
@@ -24,12 +26,7 @@ class ClientControllerApi extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:clients',
-            'phone' => 'required|string|max:10|min:10',
-            'address' => 'required|string|max:500',
-        ]);
+        $this->validateInput($request);
 
         $client = Client::create($request->all());
         return response()->json($client, 201);
@@ -55,12 +52,7 @@ class ClientControllerApi extends Controller
             return response()->json(['message' => 'Client not found'], 404);
         }
 
-        $request->validate([
-            'name' => 'sometimes|required|string|max:255',
-            'email' => 'sometimes|required|string|email|max:255|unique:clients',
-            'phone' => 'sometimes|required|string|max:10|min:10',
-            'address' => 'sometimes|required|string|max:500',
-        ]);
+        $this->validateInput($request);
 
         $client = Client::find($id);
         $client->update($request->all());
@@ -78,5 +70,24 @@ class ClientControllerApi extends Controller
         }
         Client::destroy($id);
         return response()->json(null, 204);
+    }
+
+    private function validateInput(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'first_name' => 'required|string|max:255',
+            'middle_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'phone_number' => 'required|string|size:10|unique:clients,phone_number',
+            'egn' => 'required|string|size:10|unique:clients,egn',
+            'address' => 'required|string|max:500',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'Validation failed',
+                'errors' => $validator->errors()
+            ], 422)->throwResponse();
+        }
     }
 }
