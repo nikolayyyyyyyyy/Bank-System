@@ -15,9 +15,9 @@ return new class extends Migration {
             $table->string('first_name')->nullable(false);
             $table->string('middle_name')->nullable(false);
             $table->string('last_name')->nullable(false);
-            $table->string('egn')->unique();
+            $table->string('egn');
             $table->string('address')->nullable(false);
-            $table->string('phone_number')->unique();
+            $table->string('phone_number');
             $table->softDeletes();
         });
     }

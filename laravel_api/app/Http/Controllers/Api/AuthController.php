@@ -11,7 +11,18 @@ class AuthController extends Controller
 {
     public function register(Request $request)
     {
-        $this->validateRegister($request);
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:30|min:3',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:3',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'Validation failed',
+                'errors' => $validator->errors()
+            ], 422)->throwResponse();
+        }
 
         $user = User::create([
             'name' => $request->name,
@@ -28,7 +39,17 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        $this->validateLogin($request);
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|string|email|max:255',
+            'password' => 'required|string|min:3',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'Validation failed',
+                'errors' => $validator->errors()
+            ], 422)->throwResponse();
+        }
 
         $user = User::where('email', $request['email'])->first();
 
@@ -53,36 +74,5 @@ class AuthController extends Controller
         return response()->json([
             'message' => 'Logged out successfully',
         ], 200);
-    }
-
-    private function validateRegister(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:30|min:3',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:3',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'message' => 'Validation failed',
-                'errors' => $validator->errors()
-            ], 422)->throwResponse();
-        }
-    }
-
-    private function validateLogin(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|string|email|max:255',
-            'password' => 'required|string|min:3',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'message' => 'Validation failed',
-                'errors' => $validator->errors()
-            ], 422)->throwResponse();
-        }
     }
 }

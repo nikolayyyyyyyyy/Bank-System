@@ -16,8 +16,8 @@ return new class extends Migration {
             $table->enum('currency', ['USD', 'EUR', 'GBP', 'JPY', 'AUD']);
             $table->decimal('interest', 8, 2)->nullable(false);
             $table->decimal('balance', 15, 2)->nullable(false);
-            $table->bigInteger('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->bigInteger('client_id')->unsigned();
+            $table->foreign('client_id')->references('id')->on('users');
             $table->softDeletes();
         });
     }
