@@ -12,12 +12,12 @@ return new class extends Migration {
     {
         Schema::create('accounts', function (Blueprint $table) {
             $table->id();
-            $table->string('account_number')->unique()->nullable(false);
+            $table->string('account_number')->nullable(false);
             $table->enum('currency', ['USD', 'EUR', 'GBP', 'JPY', 'AUD']);
             $table->decimal('interest', 8, 2)->nullable(false);
             $table->decimal('balance', 15, 2)->nullable(false);
             $table->bigInteger('client_id')->unsigned();
-            $table->foreign('client_id')->references('id')->on('users');
+            $table->foreign('client_id')->references('id')->on('clients');
             $table->softDeletes();
         });
     }

@@ -35,12 +35,11 @@ class EmployeeControllerApi extends Controller
                 'required',
                 'string',
                 'size:10',
-                Rule::unique('employees')->whereNull('deleted_at'),
+                Rule::unique('employees')->whereNull('deleted_at')
             ],
             'position' => [
                 'required',
                 'string',
-                'max:255',
                 Rule::in(['manager', 'cashier', 'director', 'developer', 'security', 'cleaner', 'secretary']),
             ]
         ]);
@@ -73,20 +72,18 @@ class EmployeeControllerApi extends Controller
     public function update(Request $request, string $id)
     {
         $validator = Validator::make($request->all(), [
-            'first_name' => 'sometimes|required|string|max:255|min:5',
-            'middle_name' => 'sometimes|required|string|max:255|min:5',
-            'last_name' => 'sometimes|required|string|max:255|min:5',
+            'first_name' => 'sometimes|string|max:255|min:5',
+            'middle_name' => 'sometimes|string|max:255|min:5',
+            'last_name' => 'sometimes|string|max:255|min:5',
 
             'telephone_number' => [
                 'sometimes',
-                'required',
                 'string',
                 'size:10',
                 Rule::unique('employees')->whereNull('deleted_at'),
             ],
             'position' => [
                 'sometimes',
-                'required',
                 'string',
                 'max:255',
                 Rule::in(['manager', 'cashier', 'director', 'developer', 'security', 'cleaner', 'secretary']),

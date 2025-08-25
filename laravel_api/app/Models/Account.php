@@ -16,12 +16,12 @@ class Account extends Model
         'currency',
         'interest',
         'balance',
-        'user_id',
+        'client_id',
     ];
 
-    public function user()
+    public function client()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Client::class);
     }
 
     public function transactions()

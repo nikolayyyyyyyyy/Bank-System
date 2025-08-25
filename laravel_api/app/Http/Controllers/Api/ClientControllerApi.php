@@ -77,24 +77,22 @@ class ClientControllerApi extends Controller
         }
 
         $validator = Validator::make($request->all(), [
-            'first_name' => 'sometimes|required|string|max:255',
-            'middle_name' => 'sometimes|required|string|max:255',
-            'last_name' => 'sometimes|required|string|max:255',
+            'first_name' => 'sometimes|string|max:255',
+            'middle_name' => 'sometimes|string|max:255',
+            'last_name' => 'sometimes|string|max:255',
             'phone_number' => [
                 'sometimes',
-                'required',
                 'string',
                 'size:10',
                 Rule::unique('clients')->whereNull('deleted_at'),
             ],
             'egn' => [
                 'sometimes',
-                'required',
                 'string',
                 'size:10',
                 Rule::unique('clients')->whereNull('deleted_at'),
             ],
-            'address' => 'sometimes|required|string|max:500',
+            'address' => 'sometimes|string|max:500',
         ]);
 
         if ($validator->fails()) {
