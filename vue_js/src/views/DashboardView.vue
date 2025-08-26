@@ -7,4 +7,11 @@
   <div class="content"></div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.greetings {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+</style>

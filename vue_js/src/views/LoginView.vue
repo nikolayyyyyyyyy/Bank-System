@@ -1,8 +1,12 @@
+<script setup>
+import FormComponenet from "@/components/FormComponenet.vue";
+</script>
+
 <template>
   <div class="login">
     <h1 class="title">Вход</h1>
 
-    <div class="content"></div>
+    <form-componenet />
   </div>
 </template>
 
