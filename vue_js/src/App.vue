@@ -1,6 +1,19 @@
 <template>
   <nav class="nav">
-    <router-link class="nav-link" to="/">Home</router-link>
+    <router-link class="nav-link" to="/">Dashboard</router-link>
+    <router-link class="nav-link" to="/login">Вход</router-link>
+    <router-link class="nav-link" to="/create-account">
+      Добави акаунт
+    </router-link>
+    <router-link class="nav-link" to="/create-client">
+      Добави клиент
+    </router-link>
+    <router-link class="nav-link" to="/create-employee">
+      Добави служител
+    </router-link>
+    <router-link class="nav-link" to="/create-transaction">
+      Добави транзакция
+    </router-link>
   </nav>
 
   <div class="container">
@@ -12,22 +25,28 @@
 .container {
   max-width: 900px;
   margin: auto;
-  background-color: cadetblue;
 }
 
 .nav {
   padding: 15px 20px;
-  background-color: gray;
+  background-color: blue;
   margin-bottom: 50px;
+  border-bottom: 1px solid black;
+  font-size: 12px;
+  display: flex;
+  gap: 10px;
 }
 
 .nav-link {
   text-decoration: none;
   color: black;
-  font-size: 18px;
   background-color: #fff;
   padding: 5px;
   border-radius: 5px;
   border: 1px solid black;
+}
+
+.nav-link:hover {
+  background-color: #beb8b8;
 }
 </style>
