@@ -2,17 +2,8 @@
   <nav class="nav">
     <router-link class="nav-link" to="/">Dashboard</router-link>
     <router-link class="nav-link" to="/login">Вход</router-link>
-    <router-link class="nav-link" to="/create-account">
-      Добави акаунт
-    </router-link>
     <router-link class="nav-link" to="/create-client">
       Добави клиент
-    </router-link>
-    <router-link class="nav-link" to="/create-employee">
-      Добави служител
-    </router-link>
-    <router-link class="nav-link" to="/create-transaction">
-      Добави транзакция
     </router-link>
   </nav>
 
