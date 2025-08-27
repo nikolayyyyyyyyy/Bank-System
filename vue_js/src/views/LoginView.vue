@@ -4,14 +4,22 @@ import FormComponenet from "@/components/FormComponenet.vue";
 
 <template>
   <div class="login">
-    <h1 class="title">Вход</h1>
-
+    <h1>Вход</h1>
     <form-componenet />
   </div>
 </template>
 
 <style scoped>
-.title {
+.login {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 45%;
+  margin: auto;
+}
+
+h1 {
   font-size: 28px;
+  text-align: center;
 }
 </style>

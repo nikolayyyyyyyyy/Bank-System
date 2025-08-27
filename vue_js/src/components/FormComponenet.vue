@@ -1,9 +1,20 @@
-<template>
-  <form action="">
-    <label for="email">Email</label>
-    <input type="text" />
+<script setup>
+import InputComponenet from './InputComponenet.vue';
+import ButtonComponent from './ButtonComponent.vue';
+</script>
 
-    <label for="password">Password</label>
-    <input type="password" />
+<template>
+  <form class="form" action="">
+    <input-componenet title="Имейл" type="text" placeholder="Въведи имейл" />
+    <input-componenet title="Парола" type="password" placeholder="Въведи парола" />
+    <button-component title="Влез" type="submit" />
   </form>
 </template>
+
+<style scoped>
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+</style>

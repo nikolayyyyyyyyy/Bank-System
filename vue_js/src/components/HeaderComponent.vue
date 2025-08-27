@@ -1,10 +1,17 @@
+<script setup>
+import { ref } from 'vue';
+
+const user = ref({});
+
+if (localStorage.getItem("user")) {
+  user.value = localStorage.getItem("user");
+}
+</script>
+
 <template>
   <nav class="nav">
-    <router-link class="nav-link" to="/">Dashboard</router-link>
-    <router-link class="nav-link" to="/create-client">
-      Добави клиент
-    </router-link>
-    <router-link class="nav-link" to="/login">Вход</router-link>
+    <router-link v-if="user.value" class="nav-link" to="/">Dashboard</router-link>
+    <router-link v-else="user.value" class="nav-link" to="/login">Вход</router-link>
   </nav>
 </template>
 
