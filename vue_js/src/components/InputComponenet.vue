@@ -2,14 +2,16 @@
 defineProps({
   title: String,
   type: String,
-  placeholder: String
+  placeholder: String,
 });
+
+const model = defineModel();
 </script>
 
 <template>
   <div class="input">
     <label>{{ title }}</label>
-    <input :type="type" :placeholder="placeholder">
+    <input v-model="model" :type="type" :placeholder="placeholder">
   </div>
 </template>
 
