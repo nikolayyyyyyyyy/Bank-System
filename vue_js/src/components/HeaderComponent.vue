@@ -13,6 +13,7 @@ if (localStorage.getItem('token')) {
   <nav class="nav">
     <router-link v-if="token" class="nav-link" to="/">Dashboard</router-link>
     <router-link v-if="token" class="nav-link" to="/create-client">Добави Клиент</router-link>
+    <router-link v-if="token" class="nav-link" to="/create-employee">Добави Служител</router-link>
     <router-link v-else="token" class="nav-link" to="/login">Вход</router-link>
   </nav>
 </template>

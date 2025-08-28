@@ -1,6 +1,6 @@
 <script setup>
-import ClientFormComponent from '@/components/ClientFormComponent.vue';
 import { useRouter } from 'vue-router';
+import EmployeeFormComponent from '@/components/EmployeeFormComponent.vue';
 
 const router = useRouter();
 
@@ -10,14 +10,14 @@ if (!localStorage.getItem('token')) {
 </script>
 
 <template>
-  <div class="create-client">
-    <h1>Добави Клиент</h1>
-    <client-form-component />
+  <div class="create-employee">
+    <h1>Добави Служител</h1>
+    <employee-form-component />
   </div>
 </template>
 
 <style scoped>
-.create-client {
+.create-employee {
   display: flex;
   flex-direction: column;
   gap: 10px;

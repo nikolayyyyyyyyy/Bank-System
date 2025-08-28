@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import Dashboard from "../views/DashboardView.vue";
 import LoginView from "@/views/LoginView.vue";
 import CreateClientView from "@/views/CreateClientView.vue";
+import CreateEmployeeView from "@/views/CreateEmployeeView.vue";
 
 const routes = [
   {
@@ -18,6 +19,11 @@ const routes = [
     path: "/create-client",
     name: "create_client",
     component: CreateClientView,
+  },
+  {
+    path: "/create-employee",
+    name: "create_employee",
+    component: CreateEmployeeView,
   },
 ];
 

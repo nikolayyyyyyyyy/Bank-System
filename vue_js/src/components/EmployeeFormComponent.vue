@@ -1,0 +1,109 @@
+<script setup>
+import InputComponenet from '@/components/InputComponenet.vue';
+import ButtonComponent from '@/components/ButtonComponent.vue';
+import ErrorParagraphComponent from './ErrorParagraphComponent.vue';
+import SuccessParagraphComponent from './SuccessParagraphComponent.vue';
+import SelectComponent from './SelectComponent.vue';
+
+import { reactive, ref } from 'vue';
+
+const employee = reactive({
+  first_name: '',
+  middle_name: '',
+  last_name: '',
+  position: '',
+  telephone_number: ''
+});
+
+const errors = ref({});
+
+const successMessage = ref('');
+
+const createEmployee = async () => {
+  console.log(employee);
+
+  const response = await fetch('http://127.0.0.1:8000/api/employees', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('token')}`,
+    },
+    body: JSON.stringify(employee)
+  })
+
+  if (response.ok) {
+    employee.first_name = '';
+    employee.middle_name = '';
+    employee.last_name = '';
+    employee.position = '';
+    employee.telephone_number = '';
+
+    successMessage.value = 'Успешно създаден Служител';
+    errors.value = {};
+  } else {
+    const data = await response.json();
+    successMessage.value = '';
+    errors.value = data.errors;
+  }
+};
+</script>
+
+<template>
+  <form class="form" @submit.prevent="createEmployee">
+    <input-componenet v-model="employee.first_name" title="Име" type="text" placeholder="Въведи име" />
+    <error-paragraph-component v-if="errors?.first_name" :error="errors.first_name[0]" />
+
+    <input-componenet v-model="employee.middle_name" title="Презиме" type="text" placeholder="Въведи презиме" />
+    <error-paragraph-component v-if="errors?.middle_name" :error="errors.middle_name[0]" />
+
+    <input-componenet v-model="employee.last_name" title="Фамилия" type="text" placeholder="Въведи фамилия" />
+    <error-paragraph-component v-if="errors?.last_name" :error="errors.last_name[0]" />
+
+    <select-component v-model="employee.position" :options="[
+      {
+        value: 'manager',
+        text: 'Manager'
+      },
+      {
+        value: 'cashier',
+        text: 'Cashier'
+      },
+      {
+        value: 'director',
+        text: 'Director'
+      },
+      {
+        value: 'developer',
+        text: 'Developer'
+      },
+      {
+        value: 'security',
+        text: 'Security'
+      },
+      {
+        value: 'cleaner',
+        text: 'Cleaner'
+      },
+      {
+        value: 'secretary',
+        text: 'Secretary'
+      },
+    ]" title="Позиция" />
+    <error-paragraph-component v-if="errors?.position" :error="errors.position[0]" />
+
+    <input-componenet v-model="employee.telephone_number" title="Телефон" type="text" placeholder="Въведи телефон" />
+    <error-paragraph-component v-if="errors?.telephone_number" :error="errors.telephone_number[0]" />
+
+    <button-component title="Добави" type="submit" />
+    <success-paragraph-component v-if="successMessage" :msg="successMessage" />
+  </form>
+</template>
+
+<style scoped>
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+</style>
