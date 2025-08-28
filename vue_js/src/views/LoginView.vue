@@ -1,11 +1,18 @@
 <script setup>
-import FormComponenet from "@/components/FormComponenet.vue";
+import LoginFormComponenet from "@/components/LoginFormComponenet.vue";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+
+if (localStorage.getItem('token')) {
+  router.push('/');
+}
 </script>
 
 <template>
   <div class="login">
     <h1>Вход</h1>
-    <form-componenet />
+    <login-form-componenet />
   </div>
 </template>
 

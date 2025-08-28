@@ -1,9 +1,11 @@
 <script setup>
+import { useRouter } from 'vue-router';
 import { ref } from 'vue';
 import InputComponenet from './InputComponenet.vue';
 import ButtonComponent from './ButtonComponent.vue';
 import ErrorParagraphComponent from './ErrorParagraphComponent.vue';
 
+const router = useRouter();
 const errors = ref({
   email: '',
   password: '',
@@ -34,6 +36,10 @@ const logUser = async () => {
       errors.value.password = [];
       errors.value.message = data.message;
     }
+  } else {
+    const data = await response.json();
+    localStorage.setItem("token", data.token);
+    router.push('/');
   }
 }
 </script>
