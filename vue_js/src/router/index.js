@@ -3,6 +3,7 @@ import Dashboard from "../views/DashboardView.vue";
 import LoginView from "@/views/LoginView.vue";
 import CreateClientView from "@/views/CreateClientView.vue";
 import CreateEmployeeView from "@/views/CreateEmployeeView.vue";
+import CreateAccountView from "@/views/CreateAccountView.vue";
 
 const routes = [
   {
@@ -24,6 +25,11 @@ const routes = [
     path: "/create-employee",
     name: "create_employee",
     component: CreateEmployeeView,
+  },
+  {
+    path: "/create-account",
+    name: "create_account",
+    component: CreateAccountView,
   },
 ];
 

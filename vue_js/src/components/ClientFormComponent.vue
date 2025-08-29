@@ -1,5 +1,5 @@
 <script setup>
-import InputComponenet from '@/components/InputComponenet.vue';
+import InputComponent from '@/components/InputComponent.vue';
 import ButtonComponent from '@/components/ButtonComponent.vue';
 import ErrorParagraphComponent from './ErrorParagraphComponent.vue';
 import SuccessParagraphComponent from './SuccessParagraphComponent.vue';
@@ -49,22 +49,22 @@ const createUser = async () => {
 
 <template>
   <form class="form" @submit.prevent="createUser">
-    <input-componenet v-model="client.first_name" title="Име" type="text" placeholder="Въведи име" />
+    <input-component v-model="client.first_name" title="Име" type="text" placeholder="Въведи име" />
     <error-paragraph-component v-if="errors?.first_name" :error="errors.first_name[0]" />
 
-    <input-componenet v-model="client.middle_name" title="Презиме" type="text" placeholder="Въведи презиме" />
+    <input-component v-model="client.middle_name" title="Презиме" type="text" placeholder="Въведи презиме" />
     <error-paragraph-component v-if="errors?.middle_name" :error="errors.middle_name[0]" />
 
-    <input-componenet v-model="client.last_name" title="Фамилия" type="text" placeholder="Въведи фамилия" />
+    <input-component v-model="client.last_name" title="Фамилия" type="text" placeholder="Въведи фамилия" />
     <error-paragraph-component v-if="errors?.last_name" :error="errors.last_name[0]" />
 
-    <input-componenet v-model="client.egn" title="Егн" type="text" placeholder="Въведи егн" />
+    <input-component v-model="client.egn" title="Егн" type="text" placeholder="Въведи егн" />
     <error-paragraph-component v-if="errors?.egn" :error="errors.egn[0]" />
 
-    <input-componenet v-model="client.address" title="Град" type="text" placeholder="Въведи град" />
+    <input-component v-model="client.address" title="Град" type="text" placeholder="Въведи град" />
     <error-paragraph-component v-if="errors?.address" :error="errors.address[0]" />
 
-    <input-componenet v-model="client.phone_number" title="Телефонен Номер" type="text"
+    <input-component v-model="client.phone_number" title="Телефонен Номер" type="text"
       placeholder="Въведи телефонен номер" />
     <error-paragraph-component v-if="errors?.phone_number" :error="errors.phone_number[0]" />
 

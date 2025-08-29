@@ -1,7 +1,7 @@
 <script setup>
 import { useRouter } from 'vue-router';
 import { ref } from 'vue';
-import InputComponenet from './InputComponenet.vue';
+import InputComponenet from './InputComponent.vue';
 import ButtonComponent from './ButtonComponent.vue';
 import ErrorParagraphComponent from './ErrorParagraphComponent.vue';
 

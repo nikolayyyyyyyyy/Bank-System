@@ -37,8 +37,8 @@ class AccountControllerApi extends Controller
                 'string',
                 Rule::in(['USD', 'EUR', 'GBP', 'JPY', 'AUD']),
             ],
-            "interest" => "required",
-            "balance" => "required",
+            "interest" => "required|numeric",
+            "balance" => "required|numeric",
             "client_id" => "required|exists:clients,id"
         ]);
 

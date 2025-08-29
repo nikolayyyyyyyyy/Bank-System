@@ -1,5 +1,5 @@
 <script setup>
-import InputComponenet from '@/components/InputComponenet.vue';
+import InputComponent from '@/components/InputComponent.vue';
 import ButtonComponent from '@/components/ButtonComponent.vue';
 import ErrorParagraphComponent from './ErrorParagraphComponent.vue';
 import SuccessParagraphComponent from './SuccessParagraphComponent.vue';
@@ -51,13 +51,13 @@ const createEmployee = async () => {
 
 <template>
   <form class="form" @submit.prevent="createEmployee">
-    <input-componenet v-model="employee.first_name" title="Име" type="text" placeholder="Въведи име" />
+    <input-component v-model="employee.first_name" title="Име" type="text" placeholder="Въведи име" />
     <error-paragraph-component v-if="errors?.first_name" :error="errors.first_name[0]" />
 
-    <input-componenet v-model="employee.middle_name" title="Презиме" type="text" placeholder="Въведи презиме" />
+    <input-component v-model="employee.middle_name" title="Презиме" type="text" placeholder="Въведи презиме" />
     <error-paragraph-component v-if="errors?.middle_name" :error="errors.middle_name[0]" />
 
-    <input-componenet v-model="employee.last_name" title="Фамилия" type="text" placeholder="Въведи фамилия" />
+    <input-component v-model="employee.last_name" title="Фамилия" type="text" placeholder="Въведи фамилия" />
     <error-paragraph-component v-if="errors?.last_name" :error="errors.last_name[0]" />
 
     <select-component v-model="employee.position" :options="[
@@ -92,7 +92,7 @@ const createEmployee = async () => {
     ]" title="Позиция" />
     <error-paragraph-component v-if="errors?.position" :error="errors.position[0]" />
 
-    <input-componenet v-model="employee.telephone_number" title="Телефон" type="text" placeholder="Въведи телефон" />
+    <input-component v-model="employee.telephone_number" title="Телефон" type="text" placeholder="Въведи телефон" />
     <error-paragraph-component v-if="errors?.telephone_number" :error="errors.telephone_number[0]" />
 
     <button-component title="Добави" type="submit" />
