@@ -39,6 +39,7 @@ const logUser = async () => {
   } else {
     const data = await response.json();
     localStorage.setItem("token", data.token);
+    window.location.reload();
     router.push('/');
   }
 }

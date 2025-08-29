@@ -52,8 +52,10 @@ onMounted(async () => {
       'Authorization': `Bearer ${localStorage.getItem('token')}`,
     }
   });
-  const data = await response.json();
-  clients.value = data.map(d => ({ value: d.id, text: d.egn }));
+  if (response.ok) {
+    const data = await response.json();
+    clients.value = data.map(d => ({ value: d.id, text: d.egn }));
+  }
 });
 </script>
 

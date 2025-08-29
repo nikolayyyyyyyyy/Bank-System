@@ -1,5 +1,11 @@
 <script setup>
 import AccountFormComponent from '@/components/AccountFormComponent.vue';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+if (!localStorage.getItem('token')) {
+  router.push('login');
+}
 </script>
 
 <template>
