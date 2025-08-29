@@ -6,6 +6,7 @@ import SuccessParagraphComponent from '../common/SuccessParagraphComponent.vue';
 import ButtonComponent from '../common/ButtonComponent.vue';
 import { ref, reactive, onMounted } from 'vue';
 
+const successMessage = ref('');
 const errors = ref({});
 const transaction = reactive({
   type: '',
@@ -19,9 +20,32 @@ const clients = ref([]);
 const employees = ref([]);
 const accounts = ref([]);
 
-function createTransaction() {
-  console.log(transaction);
+const createTransaction = async () => {
+  const response = await fetch('http://127.0.0.1:8000/api/transactions', {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
+    },
+    body: JSON.stringify(transaction)
+  })
 
+  if (response.ok) {
+    transaction.type = '';
+    transaction.client_id = '';
+    transaction.employee_id = '';
+    transaction.account_id = '';
+    transaction.amount = '';
+    successMessage.value = 'Successfully added transaction.';
+    errors.value = {};
+  } else {
+    const data = await response.json();
+    errors.value = data.errors;
+
+    console.log(errors.value);
+
+  }
 }
 onMounted(async () => {
   const clientReq = await fetch('http://127.0.0.1:8000/api/clients', {
@@ -92,6 +116,7 @@ onMounted(async () => {
     <error-paragraph-component v-if="errors?.amount" :error="errors.amount[0]" />
 
     <button-component title="Добави" type="submit" />
+    <success-paragraph-component v-if="successMessage" :msg="successMessage" />
   </form>
 </template>
 
