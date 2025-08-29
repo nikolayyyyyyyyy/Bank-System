@@ -5,7 +5,7 @@ import CreateClientView from "@/views/CreateClientView.vue";
 import CreateEmployeeView from "@/views/CreateEmployeeView.vue";
 import CreateAccountView from "@/views/CreateAccountView.vue";
 import CreateTransactionView from "@/views/CreateTransactionView.vue";
-
+import ClientAccountsView from "@/views/ClientAccountsView.vue";
 const routes = [
   {
     path: "/",
@@ -36,6 +36,11 @@ const routes = [
     path: "/create-transaction",
     name: "create_transaction",
     component: CreateTransactionView,
+  },
+  {
+    path: "/client-accounts",
+    name: "client_accounts",
+    component: ClientAccountsView,
   },
 ];
 

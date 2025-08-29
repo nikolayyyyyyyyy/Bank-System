@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted } from 'vue';
+import { onBeforeMount } from 'vue';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
@@ -9,7 +9,7 @@ if (!localStorage.getItem('token')) {
 }
 
 const userName = ref('');
-onMounted(async () => {
+onBeforeMount(async () => {
   const response = await fetch(`http://127.0.0.1:8000/api/user`, {
     method: 'GET',
     headers: {
@@ -25,15 +25,44 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="greetings">
-    <h1>Добре дошли отново, <span>{{ userName }}</span>!</h1>
-    <p>Логнахте се успешно.</p>
-  </div>
+  <div class="dashboard">
+    <div class="greetings">
+      <h1>Добре дошли отново, <span>{{ userName }}</span>!</h1>
+      <p>Логнахте се успешно.</p>
+    </div>
 
-  <div class="content"></div>
+    <div class="content">
+      <router-link class="content-link" to="/client-accounts">Сметки на клиент</router-link>
+    </div>
+  </div>
 </template>
 
 <style scoped>
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 100px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.content-link {
+  text-decoration: none;
+  color: black;
+  font-size: 18px;
+  border: 2px solid black;
+  padding: 10px;
+}
+
+.content-link:hover {
+  background-color: rgb(242, 236, 228);
+}
+
 .greetings {
   display: flex;
   flex-direction: column;
