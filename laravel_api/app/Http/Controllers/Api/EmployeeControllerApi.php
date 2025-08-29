@@ -30,7 +30,13 @@ class EmployeeControllerApi extends Controller
             'first_name' => 'required|string|max:255|min:5',
             'middle_name' => 'required|string|max:255|min:5',
             'last_name' => 'required|string|max:255|min:5',
-
+            'employee_number' => [
+                'required',
+                'string',
+                'min:3',
+                'max:10',
+                Rule::unique('employees')->whereNull('deleted_at')
+            ],
             'telephone_number' => [
                 'required',
                 'string',
@@ -75,7 +81,13 @@ class EmployeeControllerApi extends Controller
             'first_name' => 'sometimes|string|max:50|min:5',
             'middle_name' => 'sometimes|string|max:50|min:5',
             'last_name' => 'sometimes|string|max:50|min:5',
-
+            'employee_number' => [
+                'sometimes',
+                'string',
+                'min:3',
+                'max:10',
+                Rule::unique('employees')->whereNull('deleted_at')
+            ],
             'telephone_number' => [
                 'sometimes',
                 'string',

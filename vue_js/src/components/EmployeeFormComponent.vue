@@ -11,6 +11,7 @@ const employee = reactive({
   first_name: '',
   middle_name: '',
   last_name: '',
+  employee_number: '',
   position: '',
   telephone_number: ''
 });
@@ -36,6 +37,7 @@ const createEmployee = async () => {
     employee.first_name = '';
     employee.middle_name = '';
     employee.last_name = '';
+    employee.employee_number = '';
     employee.position = '';
     employee.telephone_number = '';
 
@@ -59,6 +61,10 @@ const createEmployee = async () => {
 
     <input-component v-model="employee.last_name" title="Фамилия" type="text" placeholder="Въведи фамилия" />
     <error-paragraph-component v-if="errors?.last_name" :error="errors.last_name[0]" />
+
+    <input-component v-model="employee.employee_number" title="Номер на служител" type="text"
+      placeholder="Въведи номер на служител" />
+    <error-paragraph-component v-if="errors?.employee_number" :error="errors.employee_number[0]" />
 
     <select-component v-model="employee.position" :options="[
       {

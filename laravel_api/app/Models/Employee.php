@@ -15,6 +15,7 @@ class Employee extends Model
         'middle_name',
         'last_name',
         'position',
+        'employee_number',
         'telephone_number'
     ];
 
