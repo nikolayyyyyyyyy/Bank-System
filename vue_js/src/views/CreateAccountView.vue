@@ -1,5 +1,5 @@
 <script setup>
-import AccountFormComponent from '@/components/AccountFormComponent.vue';
+import AccountFormComponent from '@/components/forms/AccountFormComponent.vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();

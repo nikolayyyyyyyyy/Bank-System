@@ -1,5 +1,5 @@
 <script setup>
-import ClientFormComponent from '@/components/ClientFormComponent.vue';
+import ClientFormComponent from '@/components/forms/ClientFormComponent.vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();

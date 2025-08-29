@@ -1,9 +1,9 @@
 <script setup>
 import { useRouter } from 'vue-router';
 import { ref } from 'vue';
-import InputComponenet from './InputComponent.vue';
-import ButtonComponent from './ButtonComponent.vue';
-import ErrorParagraphComponent from './ErrorParagraphComponent.vue';
+import InputComponenet from '../common/InputComponent.vue';
+import ButtonComponent from '../common/ButtonComponent.vue';
+import ErrorParagraphComponent from '../common/ErrorParagraphComponent.vue';
 
 const router = useRouter();
 const errors = ref({

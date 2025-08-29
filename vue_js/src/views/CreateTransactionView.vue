@@ -1,23 +1,22 @@
 <script setup>
+import TransactionFormComponent from '@/components/forms/TransactionFormComponent.vue';
 import { useRouter } from 'vue-router';
-import EmployeeFormComponent from '@/components/forms/EmployeeFormComponent.vue';
 
 const router = useRouter();
-
 if (!localStorage.getItem('token')) {
   router.push('/login');
 }
 </script>
 
 <template>
-  <div class="create-employee">
-    <h1>Добави Служител</h1>
-    <employee-form-component />
+  <div class="create-transaction">
+    <h1>Добави транзкция</h1>
+    <transaction-form-component />
   </div>
 </template>
 
 <style scoped>
-.create-employee {
+.create-transaction {
   display: flex;
   flex-direction: column;
   gap: 10px;

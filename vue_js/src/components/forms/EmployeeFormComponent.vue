@@ -1,9 +1,9 @@
 <script setup>
-import InputComponent from '@/components/InputComponent.vue';
-import ButtonComponent from '@/components/ButtonComponent.vue';
-import ErrorParagraphComponent from './ErrorParagraphComponent.vue';
-import SuccessParagraphComponent from './SuccessParagraphComponent.vue';
-import SelectComponent from './SelectComponent.vue';
+import InputComponent from '../common/InputComponent.vue';
+import ButtonComponent from '../common/ButtonComponent.vue';
+import ErrorParagraphComponent from '../common/ErrorParagraphComponent.vue';
+import SuccessParagraphComponent from '../common/SuccessParagraphComponent.vue';
+import SelectComponent from '../common/SelectComponent.vue';
 
 import { reactive, ref } from 'vue';
 

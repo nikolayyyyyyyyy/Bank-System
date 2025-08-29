@@ -1,5 +1,5 @@
 <script setup>
-import LoginFormComponenet from "@/components/LoginFormComponenet.vue";
+import LoginFormComponenet from "@/components/forms/LoginFormComponenet.vue";
 import { useRouter } from "vue-router";
 
 const router = useRouter();

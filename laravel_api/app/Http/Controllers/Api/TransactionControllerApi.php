@@ -45,6 +45,8 @@ class TransactionControllerApi extends Controller
             ], 422)->throwResponse();
         }
 
+
+
         $transaction = Transaction::create($request->all());
         return response()->json($transaction, 201);
     }

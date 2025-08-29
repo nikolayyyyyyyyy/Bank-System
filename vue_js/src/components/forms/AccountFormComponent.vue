@@ -1,9 +1,9 @@
 <script setup>
-import InputComponent from './InputComponent.vue';
-import SelectComponent from './SelectComponent.vue';
-import ButtonComponent from './ButtonComponent.vue';
-import ErrorParagraphComponent from './ErrorParagraphComponent.vue';
-import SuccessParagraphComponent from './SuccessParagraphComponent.vue';
+import InputComponent from '../common/InputComponent.vue';
+import SelectComponent from '../common/SelectComponent.vue';
+import ButtonComponent from '../common/ButtonComponent.vue';
+import ErrorParagraphComponent from '../common/ErrorParagraphComponent.vue';
+import SuccessParagraphComponent from '../common/SuccessParagraphComponent.vue';
 import { onMounted, reactive, ref } from 'vue';
 
 const clients = ref([]);
@@ -64,7 +64,7 @@ onMounted(async () => {
     <input-component v-model="account.account_number" title="Номер на сметка" type="text" placeholder="Въведи номер" />
     <error-paragraph-component v-if="errors?.account_number" :error="errors.account_number[0]" />
 
-    <select-component v-model="account.client_id" :options="clients" title="Клиент" />
+    <select-component v-model="account.client_id" :options="clients" title="ЕГН на клиент" />
     <error-paragraph-component v-if="errors?.client_id" :error="errors.client_id[0]" />
 
     <select-component v-model="account.currency" :options="[
