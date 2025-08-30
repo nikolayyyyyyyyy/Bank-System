@@ -19,8 +19,24 @@ const createEmployee = async (employee) => {
   return 'Служителят е създаден успешно.';
 };
 
+const getEmployees = async () => {
+  const response = await fetch(`${baseUrl}/employees`, {
+    method: 'GET',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
+    }
+  });
+
+  if (response.ok) {
+    return await response.json();
+  }
+};
+
 export function employee() {
   return {
-    createEmployee
+    createEmployee,
+    getEmployees
   };
 }

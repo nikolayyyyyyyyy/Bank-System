@@ -1,14 +1,14 @@
 const baseUrl = 'http://127.0.0.1:8000/api';
 
-const createClient = async (client) => {
-  const response = await fetch(`${baseUrl}/clients`, {
+const createAccount = async (account) => {
+  const response = await fetch(`${baseUrl}/accounts`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
       'Authorization': `Bearer ${localStorage.getItem('token')}`,
     },
-    body: JSON.stringify(client)
+    body: JSON.stringify(account)
   })
 
   if (!response.ok) {
@@ -16,26 +16,27 @@ const createClient = async (client) => {
     throw new Error(JSON.stringify(errors));
   }
 
-  return 'Клиентът е създаден успешно.';
+  return 'Акаунтът е създаден успешно.'
 };
 
-const getClients = async () => {
-  const response = await fetch('http://127.0.0.1:8000/api/clients', {
+const getAccounts = async () => {
+  const response = await fetch(`${baseUrl}/accounts`, {
     method: 'GET',
     headers: {
-      'Content-Type': 'application/json',
       'Accept': 'application/json',
-      'Authorization': `Bearer ${localStorage.getItem('token')}`,
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
     }
   });
+
   if (response.ok) {
     return await response.json();
   }
 };
 
-export function client() {
+export function account() {
   return {
-    createClient,
-    getClients
+    createAccount,
+    getAccounts
   };
 }

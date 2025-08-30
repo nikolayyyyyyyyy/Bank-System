@@ -22,10 +22,6 @@ onBeforeMount(async () => {
       <h1>Добре дошли отново, <span>{{ userName }}</span>!</h1>
       <p>Логнахте се успешно.</p>
     </div>
-
-    <div class="content">
-      <router-link class="content-link" to="/client-accounts">Сметки на клиент</router-link>
-    </div>
   </div>
 </template>
 
@@ -34,25 +30,6 @@ onBeforeMount(async () => {
   display: flex;
   flex-direction: column;
   gap: 100px;
-}
-
-.content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-}
-
-.content-link {
-  text-decoration: none;
-  color: black;
-  font-size: 18px;
-  border: 2px solid black;
-  padding: 10px;
-}
-
-.content-link:hover {
-  background-color: rgb(242, 236, 228);
 }
 
 .greetings {

@@ -5,123 +5,64 @@ import SelectComponent from '../../components/common/SelectComponent.vue';
 import ErrorParagraphComponent from '../../components/common/ErrorParagraphComponent.vue';
 import SuccessParagraphComponent from '../../components/common/SuccessParagraphComponent.vue';
 import ButtonComponent from '../../components/common/ButtonComponent.vue';
-import { ref, reactive, onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
+import { transaction } from '@/auth/transaction';
+import { client } from '@/auth/client';
+import { employee } from '@/auth/employee';
+import { account } from '@/auth/account';
 
 const router = useRouter();
 if (!localStorage.getItem('token')) {
   router.push('/login');
 }
-
+const options = [{ value: 'deposit', text: 'Deposit' }, { value: 'withdrawal', text: 'Withdrawal' }, { value: 'transfer', text: 'Transfer' }];
 const successMessage = ref('');
 const errors = ref({});
-const transaction = reactive({
-  type: '',
-  client_id: '',
-  employee_id: '',
-  account_id: '',
-  amount: ''
-});
-
+const transactionData = ref({});
 const clients = ref([]);
 const employees = ref([]);
 const accounts = ref([]);
+const { createTransaction } = transaction();
+const { getClients } = client();
+const { getEmployees } = employee();
+const { getAccounts } = account();
 
-const createTransaction = async () => {
-  const response = await fetch('http://127.0.0.1:8000/api/transactions', {
-    method: 'POST',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${localStorage.getItem('token')}`
-    },
-    body: JSON.stringify(transaction)
-  })
-
-  if (response.ok) {
-    transaction.type = '';
-    transaction.client_id = '';
-    transaction.employee_id = '';
-    transaction.account_id = '';
-    transaction.amount = '';
-    successMessage.value = 'Successfully added transaction.';
+const create = async () => {
+  try {
+    successMessage.value = await createTransaction(transactionData.value);
     errors.value = {};
-  } else {
-    const data = await response.json();
-    errors.value = data.errors;
-
-    console.log(errors.value);
-
+    transactionData.value = {};
+  } catch (err) {
+    successMessage.value = '';
+    errors.value = JSON.parse(err.message)
   }
 }
 onMounted(async () => {
-  const clientReq = await fetch('http://127.0.0.1:8000/api/clients', {
-    method: 'GET',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${localStorage.getItem('token')}`
-    }
-  });
-  const clientRes = await clientReq.json();
-  clients.value = clientRes.map(c => ({ value: c.id, text: c.egn }));
-
-  const employeeReq = await fetch('http://127.0.0.1:8000/api/employees', {
-    method: 'GET',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${localStorage.getItem('token')}`
-    }
-  });
-
-  const employeeRes = await employeeReq.json();
-  employees.value = employeeRes.map(c => ({ value: c.id, text: c.first_name + ' ' + c.last_name }));
-
-  const accoutReq = await fetch('http://127.0.0.1:8000/api/accounts', {
-    method: 'GET',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${localStorage.getItem('token')}`
-    }
-  });
-
-  const accoutRes = await accoutReq.json();
-  accounts.value = accoutRes.map(c => ({ value: c.id, text: c.account_number }));
+  clients.value = (await getClients()).map(d => ({ value: d.id, text: d.egn }));
+  employees.value = (await getEmployees()).map(c => ({ value: c.id, text: c.first_name + ' ' + c.last_name }));
+  accounts.value = (await getAccounts()).map(c => ({ value: c.id, text: c.account_number }));
 });
 </script>
 
 <template>
   <div class="create-transaction">
     <h1>Добави транзкция</h1>
-    <form class="form" @submit.prevent="createTransaction">
-      <select-component v-model="transaction.type" :options="[
-        {
-          value: 'deposit',
-          text: 'Deposit'
-        },
-        {
-          value: 'withdrawal',
-          text: 'Withdrawal'
-        },
-        {
-          value: 'transfer',
-          text: 'Transfer'
-        }
-      ]" title="Вид" />
-      <error-paragraph-component v-if="errors?.type" :error="errors.type[0]" />
+    <form class="form" @submit.prevent="create">
+      <select-component v-model="transactionData.type" :options title="Вид" />
+      <error-paragraph-component v-if="errors.errors?.type" :error="errors.errors.type[0]" />
 
-      <select-component v-model="transaction.client_id" :options="clients" title="ЕГН на клиент" />
-      <error-paragraph-component v-if="errors?.client_id" :error="errors.client_id[0]" />
+      <select-component v-model="transactionData.client_id" :options="clients" title="ЕГН на клиент" />
+      <error-paragraph-component v-if="errors.errors?.client_id" :error="errors.errors.client_id[0]" />
 
-      <select-component v-model="transaction.employee_id" :options="employees" title="Служител" />
-      <error-paragraph-component v-if="errors?.employee_id" :error="errors.employee_id[0]" />
+      <select-component v-model="transactionData.employee_id" :options="employees" title="Служител" />
+      <error-paragraph-component v-if="errors.errors?.employee_id" :error="errors.errors.employee_id[0]" />
 
-      <select-component v-model="transaction.account_id" :options="accounts" title="Номер на сметка за получаване" />
-      <error-paragraph-component v-if="errors?.account_id" :error="errors.account_id[0]" />
+      <select-component v-model="transactionData.account_id" :options="accounts"
+        title="Номер на сметка за получаване" />
+      <error-paragraph-component v-if="errors.errors?.account_id" :error="errors.errors.account_id[0]" />
 
-      <input-component v-model="transaction.amount" title="Сума" type="text" placeholder="Въведи сума" />
-      <error-paragraph-component v-if="errors?.amount" :error="errors.amount[0]" />
+      <input-component v-model="transactionData.amount" title="Сума" type="text" placeholder="Въведи сума" />
+      <error-paragraph-component v-if="errors.errors?.amount" :error="errors.errors.amount[0]" />
 
       <button-component title="Добави" type="submit" />
       <success-paragraph-component v-if="successMessage" :msg="successMessage" />

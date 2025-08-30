@@ -5,9 +5,7 @@ import CreateClientView from "@/views/client/CreateClientView.vue";
 import CreateEmployeeView from "@/views/employee/CreateEmployeeView.vue";
 import CreateAccountView from "@/views/account/CreateAccountView.vue";
 import CreateTransactionView from "@/views/transaction/CreateTransactionView.vue";
-import ClientAccountsView from "@/views/client/ClientAccountsView.vue";
 import AllClientsView from "@/views/client/AllClientsView.vue";
-import UpdateClientView from "@/views/client/UpdateClientView.vue";
 
 const routes = [
   {
@@ -35,17 +33,9 @@ const routes = [
     component: CreateTransactionView,
   },
   {
-    path: "/client-accounts",
-    component: ClientAccountsView,
-  },
-  {
     path: "/all-clients",
     component: AllClientsView,
-  },
-  {
-    path: "/client/:id/update",
-    component: UpdateClientView,
-  },
+  }
 ];
 
 const router = createRouter({
