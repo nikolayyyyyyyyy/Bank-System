@@ -11,7 +11,7 @@ import HeaderComponent from "./components/common/HeaderComponent.vue";
 
 <style scoped>
 .container {
-  max-width: 900px;
+  max-width: 1100px;
   margin: auto;
 }
 </style>

@@ -23,11 +23,11 @@ button {
   border: 1px solid black;
   border-radius: 5px;
   color: #FFF;
-  background-color: blue;
+  background-color: red;
 }
 
 button:hover {
-  background-color: rgb(3, 3, 184);
+  background-color: rgb(165, 3, 3);
   cursor: pointer;
 }
 </style>

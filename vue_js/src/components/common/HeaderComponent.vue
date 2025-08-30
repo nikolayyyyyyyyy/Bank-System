@@ -16,6 +16,7 @@ function logout() {
     <router-link v-if="loggedIn" class="nav-link" to="/create-employee">Добави Служител</router-link>
     <router-link v-if="loggedIn" class="nav-link" to="/create-account">Добави Акаунт</router-link>
     <router-link v-if="loggedIn" class="nav-link" to="/create-transaction">Добави Транзакция</router-link>
+    <router-link v-if="loggedIn" class="nav-link" to="/all-clients">Всички Клиенти</router-link>
     <router-link v-if="loggedIn" class="nav-link" @click="logout" to="/login">Изход</router-link>
     <router-link v-else class="nav-link" to="/login">Вход</router-link>
   </nav>
@@ -29,6 +30,7 @@ function logout() {
   border-bottom: 1px solid black;
   font-size: 12px;
   display: flex;
+  flex-wrap: wrap;
   gap: 10px;
 }
 

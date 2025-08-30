@@ -1,10 +1,16 @@
 <script setup>
-import InputComponent from '../common/InputComponent.vue';
-import SelectComponent from '../common/SelectComponent.vue';
-import ErrorParagraphComponent from '../common/ErrorParagraphComponent.vue';
-import SuccessParagraphComponent from '../common/SuccessParagraphComponent.vue';
-import ButtonComponent from '../common/ButtonComponent.vue';
+import { useRouter } from 'vue-router';
+import InputComponent from '../../components/common/InputComponent.vue';
+import SelectComponent from '../../components/common/SelectComponent.vue';
+import ErrorParagraphComponent from '../../components/common/ErrorParagraphComponent.vue';
+import SuccessParagraphComponent from '../../components/common/SuccessParagraphComponent.vue';
+import ButtonComponent from '../../components/common/ButtonComponent.vue';
 import { ref, reactive, onMounted } from 'vue';
+
+const router = useRouter();
+if (!localStorage.getItem('token')) {
+  router.push('/login');
+}
 
 const successMessage = ref('');
 const errors = ref({});
@@ -86,44 +92,60 @@ onMounted(async () => {
 </script>
 
 <template>
-  <form class="form" @submit.prevent="createTransaction">
-    <select-component v-model="transaction.type" :options="[
-      {
-        value: 'deposit',
-        text: 'Deposit'
-      },
-      {
-        value: 'withdrawal',
-        text: 'Withdrawal'
-      },
-      {
-        value: 'transfer',
-        text: 'Transfer'
-      }
-    ]" title="Вид" />
-    <error-paragraph-component v-if="errors?.type" :error="errors.type[0]" />
+  <div class="create-transaction">
+    <h1>Добави транзкция</h1>
+    <form class="form" @submit.prevent="createTransaction">
+      <select-component v-model="transaction.type" :options="[
+        {
+          value: 'deposit',
+          text: 'Deposit'
+        },
+        {
+          value: 'withdrawal',
+          text: 'Withdrawal'
+        },
+        {
+          value: 'transfer',
+          text: 'Transfer'
+        }
+      ]" title="Вид" />
+      <error-paragraph-component v-if="errors?.type" :error="errors.type[0]" />
 
-    <select-component v-model="transaction.client_id" :options="clients" title="ЕГН на клиент" />
-    <error-paragraph-component v-if="errors?.client_id" :error="errors.client_id[0]" />
+      <select-component v-model="transaction.client_id" :options="clients" title="ЕГН на клиент" />
+      <error-paragraph-component v-if="errors?.client_id" :error="errors.client_id[0]" />
 
-    <select-component v-model="transaction.employee_id" :options="employees" title="Служител" />
-    <error-paragraph-component v-if="errors?.employee_id" :error="errors.employee_id[0]" />
+      <select-component v-model="transaction.employee_id" :options="employees" title="Служител" />
+      <error-paragraph-component v-if="errors?.employee_id" :error="errors.employee_id[0]" />
 
-    <select-component v-model="transaction.account_id" :options="accounts" title="Номер на сметка за получаване" />
-    <error-paragraph-component v-if="errors?.account_id" :error="errors.account_id[0]" />
+      <select-component v-model="transaction.account_id" :options="accounts" title="Номер на сметка за получаване" />
+      <error-paragraph-component v-if="errors?.account_id" :error="errors.account_id[0]" />
 
-    <input-component v-model="transaction.amount" title="Сума" type="text" placeholder="Въведи сума" />
-    <error-paragraph-component v-if="errors?.amount" :error="errors.amount[0]" />
+      <input-component v-model="transaction.amount" title="Сума" type="text" placeholder="Въведи сума" />
+      <error-paragraph-component v-if="errors?.amount" :error="errors.amount[0]" />
 
-    <button-component title="Добави" type="submit" />
-    <success-paragraph-component v-if="successMessage" :msg="successMessage" />
-  </form>
+      <button-component title="Добави" type="submit" />
+      <success-paragraph-component v-if="successMessage" :msg="successMessage" />
+    </form>
+  </div>
 </template>
 
 <style scoped>
+.create-transaction {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 45%;
+  margin: auto;
+}
+
 .form {
   display: flex;
   flex-direction: column;
   gap: 10px;
+}
+
+h1 {
+  font-size: 28px;
+  text-align: center;
 }
 </style>
