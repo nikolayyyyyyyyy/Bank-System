@@ -1,6 +1,7 @@
 <script setup>
 import { useRouter } from 'vue-router';
 import { ref } from 'vue';
+import { auth } from '@/auth/user';
 import InputComponenet from '../components/common/InputComponent.vue';
 import ButtonComponent from '../components/common/ButtonComponent.vue';
 import ErrorParagraphComponent from '../components/common/ErrorParagraphComponent.vue';
@@ -10,41 +11,22 @@ if (localStorage.getItem('token')) {
   router.push('/');
 }
 
-const errors = ref({
-  email: '',
-  password: '',
-  message: ''
-});
+const errors = ref({});
 const loginData = ref({
   email: '',
   password: ''
 });
 
+const { login } = auth();
+
 const logUser = async () => {
 
-  const response = await fetch('http://127.0.0.1:8000/api/login', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-    },
-    body: JSON.stringify(loginData.value)
-  })
-
-  if (!response.ok) {
-    const data = await response.json();
-    if (data.errors) {
-      errors.value = data.errors;
-    } else {
-      errors.value.email = [];
-      errors.value.password = [];
-      errors.value.message = data.message;
-    }
-  } else {
-    const data = await response.json();
-    localStorage.setItem("token", data.token);
-    window.location.reload();
+  try {
+    await login(loginData.value);
     router.push('/');
+    window.location.reload();
+  } catch (err) {
+    errors.value = JSON.parse(err.message);
   }
 }
 </script>
@@ -54,13 +36,13 @@ const logUser = async () => {
     <h1>Вход</h1>
     <form class="form" @submit.prevent="logUser">
       <input-componenet v-model="loginData.email" title="Имейл" type="text" placeholder="Въведи имейл" />
-      <error-paragraph-component v-if="errors?.email" :error="errors.email[0]" />
+      <error-paragraph-component v-if="errors.errors?.email" :error="errors.errors.email[0]" />
 
       <input-componenet v-model="loginData.password" title="Парола" type="password" placeholder="Въведи парола" />
-      <error-paragraph-component v-if="errors?.password" :error="errors.password[0]" />
+      <error-paragraph-component v-if="errors.errors?.password" :error="errors.errors.password[0]" />
 
       <button-component title="Влез" type="submit" />
-      <error-paragraph-component v-if="errors?.message" :error="errors.message" />
+      <error-paragraph-component v-if="errors.message && !errors.errors" :error="errors.message" />
     </form>
   </div>
 </template>
