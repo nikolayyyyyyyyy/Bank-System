@@ -18,8 +18,23 @@ const login = async (obj) => {
   localStorage.setItem('token', data.token);
 }
 
+const getUser = async () => {
+  const response = await fetch(`${baseUrl}/user`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('token')}`,
+    }
+  });
+
+  const data = await response.json();
+  return data.name;
+};
+
 export function auth() {
   return {
-    login
+    login,
+    getUser
   };
 }

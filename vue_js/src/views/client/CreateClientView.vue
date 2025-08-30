@@ -4,7 +4,8 @@ import ButtonComponent from '../../components/common/ButtonComponent.vue';
 import ErrorParagraphComponent from '../../components/common/ErrorParagraphComponent.vue';
 import SuccessParagraphComponent from '../../components/common/SuccessParagraphComponent.vue';
 import { useRouter } from 'vue-router';
-import { reactive, ref } from 'vue';
+import { ref } from 'vue';
+import { client } from '@/auth/client';
 
 const router = useRouter();
 if (!localStorage.getItem('token')) {
@@ -13,40 +14,17 @@ if (!localStorage.getItem('token')) {
 
 const errors = ref({});
 const successMessage = ref('');
-const client = reactive({
-  first_name: '',
-  middle_name: '',
-  last_name: '',
-  egn: '',
-  address: '',
-  phone_number: ''
-});
+const clientData = ref({});
+const { createClient } = client();
 
-const createUser = async () => {
-  const response = await fetch('http://127.0.0.1:8000/api/clients', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      'Authorization': `Bearer ${localStorage.getItem('token')}`,
-    },
-    body: JSON.stringify(client)
-  })
-
-  if (response.ok) {
-    client.first_name = '';
-    client.middle_name = '';
-    client.last_name = '';
-    client.egn = '';
-    client.address = '';
-    client.phone_number = '';
-
-    successMessage.value = 'Успешно създаден Клиент';
+const create = async () => {
+  try {
+    successMessage.value = await createClient(clientData.value);
+    clientData.value = {};
     errors.value = {};
-  } else {
-    const data = await response.json();
+  } catch (err) {
     successMessage.value = '';
-    errors.value = data.errors;
+    errors.value = JSON.parse(err.message)
   }
 };
 </script>
@@ -54,25 +32,25 @@ const createUser = async () => {
 <template>
   <div class="create-client">
     <h1>Добави Клиент</h1>
-    <form class="form" @submit.prevent="createUser">
-      <input-component v-model="client.first_name" title="Име" type="text" placeholder="Въведи име" />
-      <error-paragraph-component v-if="errors?.first_name" :error="errors.first_name[0]" />
+    <form class="form" @submit.prevent="create">
+      <input-component v-model="clientData.first_name" title="Име" type="text" placeholder="Въведи име" />
+      <error-paragraph-component v-if="errors.errors?.first_name" :error="errors.errors.first_name[0]" />
 
-      <input-component v-model="client.middle_name" title="Презиме" type="text" placeholder="Въведи презиме" />
-      <error-paragraph-component v-if="errors?.middle_name" :error="errors.middle_name[0]" />
+      <input-component v-model="clientData.middle_name" title="Презиме" type="text" placeholder="Въведи презиме" />
+      <error-paragraph-component v-if="errors.errors?.middle_name" :error="errors.errors.middle_name[0]" />
 
-      <input-component v-model="client.last_name" title="Фамилия" type="text" placeholder="Въведи фамилия" />
-      <error-paragraph-component v-if="errors?.last_name" :error="errors.last_name[0]" />
+      <input-component v-model="clientData.last_name" title="Фамилия" type="text" placeholder="Въведи фамилия" />
+      <error-paragraph-component v-if="errors.errors?.last_name" :error="errors.errors.last_name[0]" />
 
-      <input-component v-model="client.egn" title="Егн" type="text" placeholder="Въведи егн" />
-      <error-paragraph-component v-if="errors?.egn" :error="errors.egn[0]" />
+      <input-component v-model="clientData.egn" title="Егн" type="text" placeholder="Въведи егн" />
+      <error-paragraph-component v-if="errors.errors?.egn" :error="errors.errors.egn[0]" />
 
-      <input-component v-model="client.address" title="Град" type="text" placeholder="Въведи град" />
-      <error-paragraph-component v-if="errors?.address" :error="errors.address[0]" />
+      <input-component v-model="clientData.address" title="Град" type="text" placeholder="Въведи град" />
+      <error-paragraph-component v-if="errors.errors?.address" :error="errors.errors.address[0]" />
 
-      <input-component v-model="client.phone_number" title="Телефонен Номер" type="text"
+      <input-component v-model="clientData.phone_number" title="Телефонен Номер" type="text"
         placeholder="Въведи телефонен номер" />
-      <error-paragraph-component v-if="errors?.phone_number" :error="errors.phone_number[0]" />
+      <error-paragraph-component v-if="errors.errors?.phone_number" :error="errors.errors.phone_number[0]" />
 
       <button-component title="Добави" type="submit" />
       <success-paragraph-component v-if="successMessage" :msg="successMessage" />

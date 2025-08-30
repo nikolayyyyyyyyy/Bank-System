@@ -2,25 +2,17 @@
 import { onBeforeMount } from 'vue';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { auth } from '@/auth/user';
 
 const router = useRouter();
 if (!localStorage.getItem('token')) {
   router.push('login');
 }
 
+const { getUser } = auth();
 const userName = ref('');
 onBeforeMount(async () => {
-  const response = await fetch(`http://127.0.0.1:8000/api/user`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      'Authorization': `Bearer ${localStorage.getItem('token')}`,
-    }
-  });
-
-  const data = await response.json();
-  userName.value = data.name;
+  userName.value = await getUser();
 });
 </script>
 
